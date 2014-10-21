@@ -12,9 +12,6 @@ var width  = window.innerWidth,
       0x23c2bd, 0x64CCC7, 0x80D1C5,
       0xff4c4f, 0xff695e, 0xf76d6d,
       0xff9c19, 0xffb617, 0xffc30f,
-      0x23c2bd, 0x64CCC7, 0x80D1C5,
-      0xff4c4f, 0xff695e, 0xf76d6d,
-      0xff9c19, 0xffb617, 0xffc30f,
     ],
     meshLength = colorArr.length,
     unit = 360 / meshLength,
@@ -71,7 +68,7 @@ function render() {
 
     for (var i = 0; i < meshLength; i++) {
       var radian = (i * unit + time) * (Math.PI / 180),
-          radian2 = ((i + 3) * unit + time) * (Math.PI / 180);
+          radian2 = ((i + 2) * unit + time) * (Math.PI / 180);
 
       meshArr[i].position.set(Math.cos(radian) * 5, Math.cos(radian2) * 4 + 1.33, Math.sin(radian) * 5);
       meshArr[i].rotation.y = radian * -1;
