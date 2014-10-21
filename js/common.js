@@ -12,6 +12,9 @@ var width  = window.innerWidth,
       0x23c2bd, 0x64CCC7, 0x80D1C5,
       0xff4c4f, 0xff695e, 0xf76d6d,
       0xff9c19, 0xffb617, 0xffc30f,
+      0x23c2bd, 0x64CCC7, 0x80D1C5,
+      0xff4c4f, 0xff695e, 0xf76d6d,
+      0xff9c19, 0xffb617, 0xffc30f,
     ],
     meshLength = colorArr.length,
     unit = 360 / meshLength,
@@ -43,14 +46,15 @@ scene.add(lightAmbient);
 for (var i = 0; i < meshLength; i++) {
   var geometry,
       material,
-      geometryTypeJudgeNum = Math.random() * 3;
+      geometryTypeJudgeNum = Math.random() * 3,
+      size = Math.random() * 1.33 + 0.5;
 
   if (geometryTypeJudgeNum > 2) {
-    geometry = new THREE.SphereGeometry(0.7, 24, 24);
+    geometry = new THREE.SphereGeometry(size * 0.7, 24, 24);
   } else if (geometryTypeJudgeNum > 1) {
-    geometry = new THREE.CylinderGeometry(0, 0.85, 1.2, 3);
+    geometry = new THREE.CylinderGeometry(0, size * 0.85, size * 1.2, 3);
   } else {
-    geometry = new THREE.BoxGeometry(1, 1, 1);
+    geometry = new THREE.BoxGeometry(size, size, size);
   }
 
   material = new THREE.MeshPhongMaterial({
@@ -67,7 +71,7 @@ function render() {
 
     for (var i = 0; i < meshLength; i++) {
       var radian = (i * unit + time) * (Math.PI / 180),
-          radian2 = ((i + 2) * unit + time) * (Math.PI / 180);
+          radian2 = ((i + 3) * unit + time) * (Math.PI / 180);
 
       meshArr[i].position.set(Math.cos(radian) * 5, Math.cos(radian2) * 4 + 1.33, Math.sin(radian) * 5);
       meshArr[i].rotation.y = radian * -1;
