@@ -31,9 +31,14 @@ camera.position.set(0, 0, 12);
 camera.lookAt({x: 0, y: 0, z: 0 });
 scene.add(camera);
 
-light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(0.333, 0.333, 0.666);
-scene.add(light);
+lightDirect = new THREE.DirectionalLight(0xffffff, 0.2);
+lightDirect.position.set(0.333, 0.333, 0.666);
+scene.add(lightDirect);
+
+lightAmbient = new THREE.AmbientLight(0xffffff);
+lightAmbient.color.multiplyScalar(0.8); 
+lightAmbient.position.set(-0.666, -0.666, -0.333);
+scene.add(lightAmbient);
 
 for (var i = 0; i < meshLength; i++) {
   var geometry,
@@ -49,8 +54,8 @@ for (var i = 0; i < meshLength; i++) {
   }
 
   material = new THREE.MeshPhongMaterial({
-    color    : colorArr[i],
-    ambient  : colorArr[i]
+    color  : colorArr[i],
+    ambient: colorArr[i]
   });
 
   meshArr[i] = new THREE.Mesh(geometry, material);
