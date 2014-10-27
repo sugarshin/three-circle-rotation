@@ -17,6 +17,20 @@ var width  = window.innerWidth,
     unit = 360 / meshLength,
     baseTime = +new Date;
 
+var timerFnc = function(object, eventType, callback){
+  var timer;
+
+  object.addEventListener(eventType, function() {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(function(){
+      callback();
+      timer = undefined;
+    }, 500);
+  }, false );
+};
+
 renderer = new THREE.WebGLRenderer({
   antialias: true
 });
@@ -63,19 +77,28 @@ for (var i = 0; i < meshLength; i++) {
   scene.add(meshArr[i]);
 };
 
-function render() {
-    var time = (new Date() - baseTime) / 10;
+var render = function() {
+  var time = (new Date() - baseTime) / 10;
 
-    for (var i = 0; i < meshLength; i++) {
-      var radian = (i * unit + time) * (Math.PI / 180),
-          radian2 = ((i + 2) * unit + time) * (Math.PI / 180);
+  for (var i = 0; i < meshLength; i++) {
+    var radian = (i * unit + time) * (Math.PI / 180),
+        radian2 = ((i + 2) * unit + time) * (Math.PI / 180);
 
-      meshArr[i].position.set(Math.cos(radian) * 5, Math.cos(radian2) * 4 + 1.33, Math.sin(radian) * 5);
-      meshArr[i].rotation.y = radian * -1;
-      meshArr[i].rotation.z = radian * -1;
-    }
-    renderer.render(scene, camera);
-    requestAnimationFrame(render);
+    meshArr[i].position.set(Math.cos(radian) * 5, Math.cos(radian2) * 4 + 1.33, Math.sin(radian) * 5);
+    meshArr[i].rotation.y = radian * -1;
+    meshArr[i].rotation.z = radian * -1;
+  }
+  renderer.render(scene, camera);
+  requestAnimationFrame(render);
 }
 
 render();
+
+timerFnc(window, 'resize', function(){
+  width  = window.innerWidth;
+  height = window.innerHeight;
+  
+  renderer.setSize(width, height);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+});
