@@ -94,7 +94,9 @@ var render = function() {
 
 render();
 
-timerFnc(window, 'resize', function(){
+var type = (window.ontouchstart !== undefined)? 'orientationchange' : 'resize'
+
+timerFnc(window, type, function(){
   width  = window.innerWidth;
   height = window.innerHeight;
   
